@@ -1,0 +1,16 @@
+{% extends "learning_logs/base.html" %}
+
+
+<!-- 20.1.4 使用jumbotron的bootstrap元素修改主页。-->
+{% block header %}
+    <div class="jumbotron">
+        <h1> Track your learning</h1>
+    </div>
+{% endblock header %}  <!-- 这里必须关闭 header 块 -->
+
+{% block content %}
+    <h2>
+        Whenever you learn something new about a topic, make an entry summarizing what you've learned.
+    </h2>
+{% endblock content %}
+

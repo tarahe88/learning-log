@@ -1,0 +1,100 @@
+## HTML 基础: 标签、属性、DOM 结构等
+掌握这些 HTML 基础知识后，你可以更好地理解网页结构，并使用 Python 爬虫库（如 BeautifulSoup、lxml）提取所需数据。
+## 1 HTML 文档结构：
+             HTML 文档由<html>标签包裹，包含<head>和<body>两部分
+             <head>部分包含元数据如标题，字符集等。
+             <body> 部分是网页的可见内容。
+from bs4 import Doctype
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网页标题</title>
+</head>
+<body>
+    <h1>这是一个标题</h1>
+    <p>这是一个段落。</p>
+</body>
+</html>
+## 2 常用标签。
+            标题标签：<h1>到<h6>，用于定义标题，<h1>是最高级标题。
+            段落标签：<p>用于定义段落>
+            链接标签：<a>,用于创建超链接
+            图片标签：<img>，用于插入图片。
+            列表标签：无序列表<ul>和列表项<li>      有序列表<ol>和列表项<li>
+            表格标签：<table>,<tr>(行）,<td>（单元格）
+            表单标签：<form>,<input>,<button>,用于用户输入
+<h1>主标题</h1>
+<p>这是一个段落。</p>
+<a href = "https://www.example.com">这是一个链接</a>
+<img src="image.jpg" alt = "图片表述">
+<ul>
+    <li>项目1</li>
+    <li>项目2</li>
+</ul>
+<table>
+    <tr>
+        <td>单元格1</td>
+        <td>单元格2</td>
+    </tr>
+</table>
+## 3 标签属性。标签可以通过属性来提供额外信息，常见属性：
+                    id: 唯一标识一个元素
+                    class: 为元素制定一个或多个类名。
+                    href:制定链接的目标URL
+                    src:制定图片或脚本的路径
+                    alt:为图片提供替代文本。
+<a href="https://www.example.com" id="link1" class="external-link">点击这里</a>
+<img src = "image.jpg" alt="描述图片内容">
+# 4 HTML嵌套结构。 HTML标签可以嵌套使用，形成层次结构。
+                # 例如一个<div>中可以包含多个<P>标签
+<div>
+    <p>段落1</p>
+    <p>段落2</p>
+</div>
+# 5 块级元素与行内元素
+                块级元素：独占一行，如<div>, <p>, <h1>
+                行内元素：不会换行，如<span>,<a>,<img>
+<div>这是一个块级元素</div>
+<span>这是一个行内元素</span>
+## 6 HTML 注释
+# <!--这是一个注释-->
+## HTML表单
+#表单用于收集用户输入，常见标签包括：
+            <form>: 定义表单
+            <input>：输入框
+            <button>: 按钮
+            <textarea>:多行文本输入
+            <select>和<option>: 下拉菜单
+<form action="/submit" method="post">
+    <label for = "username">用户名：<label>
+    <input type="text" id = "username" name="username">
+    <button type="submit">提交</button>
+</form>
+# 8 HTML语义化标签:语义化标签使代码更具有可读性：<header>,<footer>,<article>,<section>
+<header>
+    <h1>网站标题</h1>
+</header>
+<section>
+    <p>这是一个段落。</p>
+</section>
+<footer>
+    <p>版权信息</p>
+</footer>
+# 9 HTML与爬虫的关系： 爬虫通过解析HTML文档来提取数据。
+                爬虫中可以通过class="title"或class="description"来定位并提取数据。
+                需要关注：
+                目标数据的标签（如<p>,<a>).
+                目标数据的属性(如class,id)
+                目标数据的嵌套结构
+<div class = "content">
+    <p class="title">文章标题</p>
+    <p class="description">文章描述</p>
+</div>
+
+
+
+
+
+
+

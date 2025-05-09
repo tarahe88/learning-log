@@ -1,0 +1,121 @@
+'''
+新手学爬虫，掌握CSS非常重要，因为CSS选择器是定位和提取网页数据的核心工具之一。
+爬虫通常需要从HTML文档中提取特定元素的内容，而CSS选择器可以帮助你快速，精准的定位这些元素。
+'''
+# 1. CSS选择器基础。 CSS选择器用于选择HTML元素并应用样式，同时也是爬虫定位元素的重要工具。
+
+# 1.1 常用选择器。 标签选择器，类选择器，ID选择器，属性选择器
+# 标签选择器：选择特定标签的元素。 
+p { color: red;} /* 选择所有<p> 标签*/
+# 类选择器：选择具有特定class属性的元素
+.content{ font-size: 16px;} /* 选择 class="content"的元素 */
+# ID 选择器： 选择具有特定id属性的元素。
+#header { background-color:yellow;} /* 选择 id="header"的元素 */
+
+# 1.2 组合选择器
+后代选择器：选择某个元素的后代元素。
+    div p {color: green;}            /* 选择<div>内容的所有<p> 标签 */
+子元素选择器：选择某个元素的直接子元素
+    div > p { color: green;}      /* 选择<div>内容的直接子元素<p> 标签 */
+相邻兄弟选择器：选择某个元素之后的相邻兄弟元素
+    h1 + p {font-weight:bold;}   /* 选择紧接在<h1>之后的<p>标签 */
+通用兄弟选择器：选择某个元素之后的所有兄弟元素
+    h1~p {color: orange;)  /* 选择紧接在<h1>之后的所有<p>标签 */
+
+1.3 伪类选择器。 伪类选择器用于选择元素的特定状态
+    a:hover {color: red;}       /* 选择鼠标悬停时的<a>标签 */
+    li:nth-child(2) {background-color:yellow;}      /* 选择第二个<li>元素 */
+
+2. CSS在爬虫中的应用。 在爬虫中，css选择器通常用于定位html元素并提取数据，常用的python库比如(beautifulsoup,lxml)支持css选择器
+2.1 使用beautifulsoup解析html。 beautifulsoup是一个流行的python库。支持css选择器来定位元素
+from bs4 import BeautifulSoup
+html_doc = '''
+<html>
+<head><title>示例网页</title></head>
+<body>
+    <h1>标题</h1>
+    <p class="content">这是一个段落。</p>
+    <a href="https://example.com">链接</a>
+    <ul>
+        <li>列表项1</li>
+        <li>列表项2</li>
+    </ul>
+</body>
+</html>
+'''
+soup = BeautifulSoup(html_doct,'html.parser')
+
+#使用css选择器定位元素
+title = soup.select_one('title').text # 选择title标签
+paragraph = soup.select_one('p.content').text #选择 class="content" 的 <p> 标签
+link = soup.select_one('a')['href'] # 选择 <a> 标签的href属性
+list_items = soup.select('ul li')  #选择< ul> 内的所有 <li> 标签
+
+print(title)  # 输出：示例网页
+print(paragraph)  # 输出：这是一个段落
+print(link)  # 输出：https://example.com
+for item in list_items:
+    print(item.text) # 输出： 列表项1， 列表项2
+
+2.2 使用 lxml 解析 HTML
+lxml 是另一个高性能的 HTML/XML 解析库，支持 XPath 和 CSS 选择器。
+from lxml import etree
+html_doc = '''
+<html>
+<head><title>示例网页</title></head>
+<body>
+    <h1>标题</h1>
+    <p class="content">这是一个段落。</p>
+    <a href="https://example.com">链接</a>
+</body>
+</html>
+'''
+tree = etree.HTML(html_doc)
+
+#使用css选择器定位元素
+title = tree.cssselect('title')[0].text    # 选择 <title> 标签
+paragraph = tree.cssselect('p.content')[0].text   #选择 class="content" 的 <p> 标签
+link = tree.cssselect('a')[0].get('href')   # 选择 <a> 标签的href属性
+print(title)  # 输出：示例网页
+print(paragraph)  # 输出：这是一个段落
+print(link)  # 输出：https://example.com
+
+3. CSS选择器的进阶用法
+3.1 选择特定位置的元素
+ 使用伪类选择器选择特定位置的元素
+# 选择第一个<li>元素
+    first_item = soup.select_one('ul li:first-child').text
+# 选择最后一个<li>元素
+    last_item = soup.select_one('ul li:last-child').text
+# 选择第n个<li>元素
+    nth_item = soup.select_one('ul li:nth-child').text
+3.2 选择包含特定文本的元素。
+使用:contains伪类选择包含特定文本的元素（Beautifulsoup支持）
+#选择包含“段落”文本的<p>标签
+paragraph = soup.select_one('p:contains("段落")').text
+3.3 选择特定属性的元素
+使用属性器选择具有特定属性的元素
+# 选择href属性包含"example"的<a>标签
+link = soup.select_one('a[href*="example"]')['href']
+
+4. 实践建议
+使用浏览器开发者工具：按 F12 打开开发者工具，使用“检查元素”功能查看网页的 HTML 结构和 CSS 选择器。
+练习 CSS 选择器：通过在线工具（如 CSS Diner）练习 CSS 选择器。
+结合爬虫实战：尝试编写爬虫，使用 CSS 选择器提取网页中的数据。
+
+5. 总结
+CSS 选择器 是爬虫定位 HTML 元素的核心工具。
+
+BeautifulSoup 和 lxml 是常用的 Python 库，支持 CSS 选择器。
+
+掌握 CSS 选择器可以帮助你高效、精准地提取网页数据。
+
+通过学习 CSS 选择器并结合爬虫实战，你将能够轻松应对各种网页数据提取任务！
+
+
+
+
+
+
+
+
